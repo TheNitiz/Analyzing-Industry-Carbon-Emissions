@@ -1,8 +1,41 @@
 
-Top countries in emitting co2:
+1. Total Emission by Country:
 
 SELECT Country, SUM(Value) AS Total_Emissions
 FROM co2_emit
 WHERE Series = 'Emissions (thousand metric tons of carbon dioxide)'
 GROUP BY Country
 ORDER BY Total_Emissions DESC;
+
+2. Yearly Emissions Trend
+
+SELECT Year, SUM(Value) AS Total_Emissions
+FROM your_table_name
+WHERE Series = 'Emissions (thousand metric tons of carbon dioxide)'
+GROUP BY Year
+ORDER BY Year ASC;
+
+3. Top 5 Countries with Highest Emissions
+
+SELECT Country, SUM(Value) AS Total_Emissions
+FROM co2_emit
+WHERE Series = 'Emissions (thousand metric tons of carbon dioxide)'
+GROUP BY Country
+ORDER BY Total_Emissions DESC 
+LIMIT 5;
+
+4. Year-on-Year Growth in Emissions for a Specific Country
+
+SELECT Year, Value AS Emissions,
+       LAG(Value) OVER (ORDER BY Year) AS Previous_Year_Emissions,
+       (Value - LAG(Value) OVER (ORDER BY Year)) / LAG(Value) OVER (ORDER BY Year) * 100 AS Growth_Percentage
+FROM co2_emit
+WHERE Country = 'Algeria' AND Series = 'Emissions (thousand metric tons of carbon dioxide)'
+ORDER BY Year;
+
+5. Comparison of Emissions Between Countries
+
+SELECT Country, Year, Value AS Emissions
+FROM co2_emit
+WHERE Country IN ('india', 'china') AND Series = 'Emissions (thousand metric tons of carbon dioxide)'
+ORDER BY Year, Country;
