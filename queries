@@ -1,0 +1,8 @@
+
+Top countries in emitting co2:
+
+SELECT Country, SUM(Value) AS Total_Emissions
+FROM co2_emit
+WHERE Series = 'Emissions (thousand metric tons of carbon dioxide)'
+GROUP BY Country
+ORDER BY Total_Emissions DESC;
